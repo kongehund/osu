@@ -46,11 +46,11 @@ namespace osu.Game.Rulesets.Edit
 
         protected override void LoadComplete()
         {
+            base.LoadComplete();
             foreach (EditorToolboxGroup group in Children)
             {
                 group.Clicked += onToolboxGroupClicked;
             }
-            base.LoadComplete();
         }
 
         private void onToolboxGroupClicked(object? sender, EventArgs args)
