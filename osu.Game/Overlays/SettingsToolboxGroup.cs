@@ -1,6 +1,7 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Caching;
@@ -27,6 +28,8 @@ namespace osu.Game.Overlays
         private const float transition_duration = 250;
         private const int header_height = 30;
         private const int corner_radius = 5;
+
+        public event EventHandler? Clicked;
 
         private readonly Cached headerTextVisibilityCache = new Cached();
 
@@ -143,6 +146,12 @@ namespace osu.Game.Overlays
             updateFadeState();
             updateExpandedState(true);
             base.OnHoverLost(e);
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            Clicked?.Invoke(this, EventArgs.Empty);
+            return base.OnClick(e);
         }
 
         protected override void Update()

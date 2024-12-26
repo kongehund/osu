@@ -1,12 +1,14 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Configuration;
 using osu.Game.Graphics.Containers;
+using osu.Game.Overlays;
 using osu.Game.Screens.Edit;
 using osuTK;
 
@@ -40,6 +42,32 @@ namespace osu.Game.Rulesets.Edit
         private void load(OsuConfigManager config)
         {
             config.BindWith(OsuSetting.EditorContractSidebars, contractSidebars);
+        }
+
+        protected override void LoadComplete()
+        {
+            foreach (EditorToolboxGroup group in Children)
+            {
+                group.Clicked += onToolboxGroupClicked;
+            }
+            base.LoadComplete();
+        }
+
+        private void onToolboxGroupClicked(object? sender, EventArgs args)
+        {
+            if (sender is not SettingsToolboxGroup toolboxGroup)
+                return;
+
+            scrollToToolboxGroup(toolboxGroup);
+        }
+
+        private void scrollToToolboxGroup(SettingsToolboxGroup toolboxGroup)
+        {
+            if (InternalChild is OsuScrollContainer scrollContainer)
+            {
+                float pos = scrollContainer.GetChildPosInContent(toolboxGroup);
+                scrollContainer.ScrollTo(pos);
+            }
         }
 
         protected override void Update()
