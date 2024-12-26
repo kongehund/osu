@@ -151,7 +151,7 @@ namespace osu.Game.Overlays
         protected override bool OnClick(ClickEvent e)
         {
             Clicked?.Invoke(this, EventArgs.Empty);
-            return base.OnClick(e);
+            return true;
         }
 
         protected override void Update()

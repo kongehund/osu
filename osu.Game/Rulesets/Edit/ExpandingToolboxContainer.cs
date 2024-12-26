@@ -58,6 +58,9 @@ namespace osu.Game.Rulesets.Edit
             if (sender is not SettingsToolboxGroup toolboxGroup)
                 return;
 
+            if (!Expanded.Value)
+                Expanded.Value = true;
+
             scrollToToolboxGroup(toolboxGroup);
         }
 
